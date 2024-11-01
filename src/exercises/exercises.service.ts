@@ -17,11 +17,14 @@ export class ExercisesService {
   }
 
   async findAll(): Promise<Exercise[]> {
-    return await this.exerciseRepository.find();
+    return await this.exerciseRepository.find({ relations: { muscles: true } });
   }
 
   async findOne(id: string): Promise<Exercise> {
-    const exercise: Exercise | null = await this.exerciseRepository.findOne({ where: { id: id } });
+    const exercise: Exercise | null = await this.exerciseRepository.findOne({
+      where: { id: id },
+      relations: { muscles: true }
+    });
 
     if (!exercise) throw new NotFoundException();
 
@@ -29,7 +32,10 @@ export class ExercisesService {
   }
 
   async update(id: string, updateExerciseDto: UpdateExerciseDto): Promise<Exercise> {
-    const exercise: Exercise | null = await this.exerciseRepository.findOne({ where: { id: id } });
+    const exercise: Exercise | null = await this.exerciseRepository.findOne({
+      where: { id: id },
+      relations: { muscles: true }
+    });
 
     if (!exercise) throw new NotFoundException();
 
@@ -37,7 +43,10 @@ export class ExercisesService {
   }
 
   async remove(id: string): Promise<Exercise> {
-    const exercise: Exercise | null = await this.exerciseRepository.findOne({ where: { id: id } });
+    const exercise: Exercise | null = await this.exerciseRepository.findOne({
+      where: { id: id },
+      relations: { muscles: true }
+    });
 
     if (!exercise) throw new NotFoundException();
 
