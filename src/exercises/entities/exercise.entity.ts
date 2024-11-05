@@ -1,6 +1,6 @@
 import { Muscle } from "src/muscles/entities/muscle.entity";
-import { Workout } from "src/workouts/entities/workout.entity";
-import { Column, Entity, JoinTable, ManyToMany, PrimaryGeneratedColumn } from "typeorm";
+import { WorkoutExercise } from "src/workouts/entities/workout-exercise.entity";
+import { Column, Entity, JoinTable, ManyToMany, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity()
 export class Exercise {
@@ -18,6 +18,6 @@ export class Exercise {
     })
     muscles: Muscle[];
 
-    @ManyToMany(() => Workout, (workout: Workout) => workout.exercises)
-    workouts: Workout[];
+    @OneToMany(() => WorkoutExercise, (workoutExercise: WorkoutExercise) => workoutExercise.exercise)
+    workoutExercises: WorkoutExercise[];
 }

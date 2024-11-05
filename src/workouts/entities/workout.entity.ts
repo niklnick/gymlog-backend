@@ -1,5 +1,5 @@
-import { Exercise } from "src/exercises/entities/exercise.entity";
-import { Column, Entity, JoinTable, ManyToMany, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
+import { WorkoutExercise } from "./workout-exercise.entity";
 
 @Entity()
 export class Workout {
@@ -9,11 +9,10 @@ export class Workout {
     @Column({ unique: true })
     name: string;
 
-    @ManyToMany(() => Exercise, (exercise: Exercise) => exercise.workouts)
-    @JoinTable({
-        name: 'workout_exercise',
-        joinColumn: { name: 'workout_id' },
-        inverseJoinColumn: { name: 'exercise_id' }
-    })
-    exercises: Exercise[];
+    @OneToMany(
+        () => WorkoutExercise,
+        (workoutExercise: WorkoutExercise) => workoutExercise.workout,
+        { cascade: true }
+    )
+    workoutExercises: WorkoutExercise[];
 }

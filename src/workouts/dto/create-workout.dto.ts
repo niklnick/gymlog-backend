@@ -1,10 +1,10 @@
 import { IsNotEmpty, IsString } from "class-validator";
-import { Exercise } from "src/exercises/entities/exercise.entity";
+import { WorkoutExercise } from "../entities/workout-exercise.entity";
 
 export class CreateWorkoutDto {
     @IsNotEmpty()
     @IsString()
     readonly name: string;
 
-    readonly exercises: Exercise[];
+    readonly workoutExercises: WorkoutExercise[];
 }
