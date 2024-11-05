@@ -1,4 +1,5 @@
 import { Muscle } from "src/muscles/entities/muscle.entity";
+import { Workout } from "src/workouts/entities/workout.entity";
 import { Column, Entity, JoinTable, ManyToMany, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity()
@@ -16,4 +17,7 @@ export class Exercise {
         inverseJoinColumn: { name: 'muscle_id' }
     })
     muscles: Muscle[];
+
+    @ManyToMany(() => Workout, (workout: Workout) => workout.exercises)
+    workouts: Workout[];
 }

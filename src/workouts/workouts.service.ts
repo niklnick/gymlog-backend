@@ -17,11 +17,14 @@ export class WorkoutsService {
   }
 
   async findAll(): Promise<Workout[]> {
-    return await this.workoutsRepository.find();
+    return await this.workoutsRepository.find({ relations: { exercises: { muscles: true } } });
   }
 
   async findOne(id: string): Promise<Workout> {
-    const workout: Workout | null = await this.workoutsRepository.findOne({ where: { id: id } });
+    const workout: Workout | null = await this.workoutsRepository.findOne({
+      where: { id: id },
+      relations: { exercises: { muscles: true } }
+    });
 
     if (!workout) throw new NotFoundException();
 
@@ -29,7 +32,10 @@ export class WorkoutsService {
   }
 
   async update(id: string, updateWorkoutDto: UpdateWorkoutDto): Promise<Workout> {
-    const workout: Workout | null = await this.workoutsRepository.findOne({ where: { id: id } });
+    const workout: Workout | null = await this.workoutsRepository.findOne({
+      where: { id: id },
+      relations: { exercises: { muscles: true } }
+    });
 
     if (!workout) throw new NotFoundException();
 

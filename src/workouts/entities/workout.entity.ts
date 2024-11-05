@@ -1,4 +1,5 @@
-import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { Exercise } from "src/exercises/entities/exercise.entity";
+import { Column, Entity, JoinTable, ManyToMany, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity()
 export class Workout {
@@ -7,4 +8,12 @@ export class Workout {
 
     @Column({ unique: true })
     name: string;
+
+    @ManyToMany(() => Exercise, (exercise: Exercise) => exercise.workouts)
+    @JoinTable({
+        name: 'workout_exercise',
+        joinColumn: { name: 'workout_id' },
+        inverseJoinColumn: { name: 'exercise_id' }
+    })
+    exercises: Exercise[];
 }
