@@ -1,5 +1,5 @@
 import { Muscle } from "src/muscles/entities/muscle.entity";
-import { WorkoutExercise } from "src/workouts/entities/workout-exercise.entity";
+import { WorkoutExercise } from "src/workout-exercises/entities/workout-exercise.entity";
 import { Column, Entity, JoinTable, ManyToMany, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity()
