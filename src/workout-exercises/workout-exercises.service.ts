@@ -12,7 +12,7 @@ export class WorkoutExercisesService {
   async create(workoutId: string, createWorkoutExerciseDto: CreateWorkoutExerciseDto): Promise<WorkoutExercise> {
     const workoutExercise: WorkoutExercise = this.workoutExercisesRepository.create({
       ...createWorkoutExerciseDto,
-      workout: { id: workoutId }
+      workoutId: workoutId
     });
 
     return await this.workoutExercisesRepository.save(workoutExercise);
@@ -20,14 +20,14 @@ export class WorkoutExercisesService {
 
   async findAll(workoutId: string): Promise<WorkoutExercise[]> {
     return await this.workoutExercisesRepository.find({
-      where: { workout: { id: workoutId } },
+      where: { workoutId: workoutId },
       relations: { exercise: true }
     });
   }
 
-  async findOne(workoutId: string, id: string): Promise<WorkoutExercise> {
+  async findOne(workoutId: string, exerciseId: string): Promise<WorkoutExercise> {
     const workoutExercise: WorkoutExercise | null = await this.workoutExercisesRepository.findOne({
-      where: { id: id, workout: { id: workoutId } },
+      where: { workoutId: workoutId, exerciseId: exerciseId },
       relations: { exercise: true }
     });
 
@@ -36,9 +36,9 @@ export class WorkoutExercisesService {
     return workoutExercise;
   }
 
-  async update(workoutId: string, id: string, updateWorkoutExerciseDto: UpdateWorkoutExerciseDto): Promise<WorkoutExercise> {
+  async update(workoutId: string, exerciseId: string, updateWorkoutExerciseDto: UpdateWorkoutExerciseDto): Promise<WorkoutExercise> {
     const workoutExercise: WorkoutExercise | null = await this.workoutExercisesRepository.findOne({
-      where: { id: id, workout: { id: workoutId } },
+      where: { workoutId: workoutId, exerciseId: exerciseId },
       relations: { exercise: true }
     });
 
@@ -47,9 +47,9 @@ export class WorkoutExercisesService {
     return await this.workoutExercisesRepository.save({ ...workoutExercise, ...updateWorkoutExerciseDto });
   }
 
-  async remove(workoutId: string, id: string): Promise<WorkoutExercise> {
+  async remove(workoutId: string, exerciseId: string): Promise<WorkoutExercise> {
     const workoutExercise: WorkoutExercise | null = await this.workoutExercisesRepository.findOne({
-      where: { id: id, workout: { id: workoutId } }
+      where: { workoutId: workoutId, exerciseId: exerciseId },
     });
 
     if (!workoutExercise) throw new NotFoundException();

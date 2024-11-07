@@ -21,22 +21,28 @@ export class WorkoutExercisesController {
     return await this.workoutExercisesService.findAll(workoutId);
   }
 
-  @Get(':id')
-  async findOne(@Param('workoutId') workoutId: string, @Param('id') id: string): Promise<WorkoutExercise> {
-    return await this.workoutExercisesService.findOne(workoutId, id);
+  @Get(':exerciseId')
+  async findOne(
+    @Param('workoutId') workoutId: string,
+    @Param('exerciseId') exerciseId: string
+  ): Promise<WorkoutExercise> {
+    return await this.workoutExercisesService.findOne(workoutId, exerciseId);
   }
 
-  @Patch(':id')
+  @Patch(':exerciseId')
   async update(
     @Param('workoutId') workoutId: string,
-    @Param('id') id: string,
+    @Param('exerciseId') id: string,
     @Body() updateWorkoutExerciseDto: UpdateWorkoutExerciseDto
   ): Promise<WorkoutExercise> {
     return await this.workoutExercisesService.update(workoutId, id, updateWorkoutExerciseDto);
   }
 
-  @Delete(':id')
-  async remove(@Param('workoutId') workoutId: string, @Param('id') id: string): Promise<WorkoutExercise> {
-    return await this.workoutExercisesService.remove(workoutId, id);
+  @Delete(':exerciseId')
+  async remove(
+    @Param('workoutId') workoutId: string,
+    @Param('exerciseId') exerciseId: string
+  ): Promise<WorkoutExercise> {
+    return await this.workoutExercisesService.remove(workoutId, exerciseId);
   }
 }
