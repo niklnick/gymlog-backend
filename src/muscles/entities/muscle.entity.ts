@@ -1,7 +1,7 @@
 import { Exercise } from "src/exercises/entities/exercise.entity";
 import { Column, Entity, ManyToMany, PrimaryGeneratedColumn } from "typeorm";
 
-@Entity()
+@Entity({ orderBy: { name: 'ASC' } })
 export class Muscle {
     @PrimaryGeneratedColumn('uuid')
     id: string;

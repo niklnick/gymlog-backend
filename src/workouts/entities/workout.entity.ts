@@ -1,7 +1,7 @@
 import { WorkoutExercise } from "src/workout-exercises/entities/workout-exercise.entity";
 import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 
-@Entity()
+@Entity({ orderBy: { name: 'ASC' } })
 export class Workout {
     @PrimaryGeneratedColumn('uuid')
     id: string;

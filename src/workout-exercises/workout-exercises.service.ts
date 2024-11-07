@@ -10,12 +10,10 @@ export class WorkoutExercisesService {
   constructor(@InjectRepository(WorkoutExercise) private readonly workoutExercisesRepository: Repository<WorkoutExercise>) { }
 
   async create(workoutId: string, createWorkoutExerciseDto: CreateWorkoutExerciseDto): Promise<WorkoutExercise> {
-    const workoutExercise: WorkoutExercise = this.workoutExercisesRepository.create({
-      ...createWorkoutExerciseDto,
-      workoutId: workoutId
-    });
-
-    return await this.workoutExercisesRepository.save(workoutExercise);
+    return await this.workoutExercisesRepository.save(this.workoutExercisesRepository.create({
+      workoutId: workoutId,
+      ...createWorkoutExerciseDto
+    }));
   }
 
   async findAll(workoutId: string): Promise<WorkoutExercise[]> {

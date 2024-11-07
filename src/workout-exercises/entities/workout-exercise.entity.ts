@@ -7,7 +7,7 @@ export interface Set {
     readonly weightsKg: number;
 }
 
-@Entity()
+@Entity({ orderBy: { position: 'ASC' } })
 export class WorkoutExercise {
     @PrimaryColumn({ name: 'workout_id' })
     workoutId: string;
@@ -15,14 +15,17 @@ export class WorkoutExercise {
     @PrimaryColumn({ name: 'exercise_id' })
     exerciseId: string;
 
-    @ManyToOne(() => Workout, (workout: Workout) => workout.workoutExercises)
+    @ManyToOne(() => Workout, (workout: Workout) => workout.workoutExercises, { onDelete: 'CASCADE' })
     @JoinColumn({ name: 'workout_id' })
     workout: Workout;
 
-    @ManyToOne(() => Exercise, (exercise: Exercise) => exercise.workoutExercises)
+    @ManyToOne(() => Exercise, (exercise: Exercise) => exercise.workoutExercises, { onDelete: 'CASCADE' })
     @JoinColumn({ name: 'exercise_id' })
     exercise: Exercise;
 
-    @Column('jsonb')
+    @Column({ generated: 'increment' })
+    position: number;
+
+    @Column('json')
     sets: Set[];
 }

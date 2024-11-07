@@ -2,7 +2,7 @@ import { Muscle } from "src/muscles/entities/muscle.entity";
 import { WorkoutExercise } from "src/workout-exercises/entities/workout-exercise.entity";
 import { Column, Entity, JoinTable, ManyToMany, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 
-@Entity()
+@Entity({ orderBy: { name: 'ASC' } })
 export class Exercise {
     @PrimaryGeneratedColumn('uuid')
     id: string;
