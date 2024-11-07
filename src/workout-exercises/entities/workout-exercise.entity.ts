@@ -15,17 +15,18 @@ export class WorkoutExercise {
     @PrimaryColumn({ name: 'exercise_id' })
     exerciseId: string;
 
-    @ManyToOne(() => Workout, (workout: Workout) => workout.workoutExercises, { onDelete: 'CASCADE' })
-    @JoinColumn({ name: 'workout_id' })
-    workout: Workout;
-
-    @ManyToOne(() => Exercise, (exercise: Exercise) => exercise.workoutExercises, { onDelete: 'CASCADE' })
-    @JoinColumn({ name: 'exercise_id' })
-    exercise: Exercise;
-
+    // TODO: Remove generated increment and implement custom auto increment in the service for the create and delete function
     @Column({ generated: 'increment' })
     position: number;
 
     @Column('json')
     sets: Set[];
+
+    @ManyToOne(() => Workout, (workout: Workout) => workout.workoutExercises, { onDelete: 'CASCADE' })
+    @JoinColumn({ name: 'workout_id' })
+    workout: Workout;
+
+    @ManyToOne(() => Exercise, { onDelete: 'CASCADE' })
+    @JoinColumn({ name: 'exercise_id' })
+    exercise: Exercise;
 }

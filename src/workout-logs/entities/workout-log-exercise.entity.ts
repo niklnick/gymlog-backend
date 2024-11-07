@@ -11,17 +11,17 @@ export class WorkoutLogExercise {
     @PrimaryColumn({ name: 'exercise_id' })
     exerciseId: string;
 
-    @ManyToOne(() => WorkoutLog, (workoutLog: WorkoutLog) => workoutLog.workoutLogExercises, { onDelete: 'CASCADE' })
-    @JoinColumn({ name: 'workout_log_id' })
-    workoutLog: WorkoutLog;
-
-    @ManyToOne(() => Exercise, (exercise: Exercise) => exercise.workoutLogExercises, { onDelete: 'CASCADE' })
-    @JoinColumn({ name: 'exercise_id' })
-    exercise: Exercise;
-
     @Column({ generated: 'increment' })
     position: number;
 
     @Column('json')
     sets: Set[];
+
+    @ManyToOne(() => WorkoutLog, (workoutLog: WorkoutLog) => workoutLog.workoutLogExercises, { onDelete: 'CASCADE' })
+    @JoinColumn({ name: 'workout_log_id' })
+    workoutLog: WorkoutLog;
+
+    @ManyToOne(() => Exercise, { onDelete: 'CASCADE' })
+    @JoinColumn({ name: 'exercise_id' })
+    exercise: Exercise;
 }

@@ -10,7 +10,7 @@ export class WorkoutLog {
     @CreateDateColumn({ name: 'create_date' })
     createDate: Date;
 
-    @ManyToOne(() => Workout, (workout: Workout) => workout.logs)
+    @ManyToOne(() => Workout)
     @JoinColumn({ name: 'workout_id' })
     workout: Workout;
 
