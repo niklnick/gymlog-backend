@@ -3,6 +3,7 @@ import { RouterModule, Routes } from "@nestjs/core";
 import { ExercisesModule } from './exercises/exercises.module';
 import { MusclesModule } from './muscles/muscles.module';
 import { WorkoutExercisesModule } from './workout-exercises/workout-exercises.module';
+import { WorkoutLogsModule } from './workout-logs/workout-logs.module';
 import { WorkoutsModule } from './workouts/workouts.module';
 
 const routes: Routes = [
@@ -13,6 +14,10 @@ const routes: Routes = [
     {
         path: 'muscles',
         module: MusclesModule
+    },
+    {
+        path: 'workout-logs',
+        module: WorkoutLogsModule
     },
     {
         path: 'workouts',
@@ -32,6 +37,7 @@ const routes: Routes = [
         ExercisesModule,
         MusclesModule,
         WorkoutExercisesModule,
+        WorkoutLogsModule,
         WorkoutsModule
     ]
 })

@@ -1,5 +1,6 @@
 import { Muscle } from "src/muscles/entities/muscle.entity";
 import { WorkoutExercise } from "src/workout-exercises/entities/workout-exercise.entity";
+import { WorkoutLogExercise } from "src/workout-logs/entities/workout-log-exercise.entity";
 import { Column, Entity, JoinTable, ManyToMany, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity({ orderBy: { name: 'ASC' } })
@@ -20,4 +21,7 @@ export class Exercise {
 
     @OneToMany(() => WorkoutExercise, (workoutExercise: WorkoutExercise) => workoutExercise.exercise)
     workoutExercises: WorkoutExercise[];
+
+    @OneToMany(() => WorkoutLogExercise, (workoutLogExercise: WorkoutLogExercise) => workoutLogExercise.exercise)
+    workoutLogExercises: WorkoutLogExercise[];
 }
