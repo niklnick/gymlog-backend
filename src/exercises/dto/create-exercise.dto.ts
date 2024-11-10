@@ -1,4 +1,4 @@
-import { IsArray, IsNotEmpty, IsString } from "class-validator";
+import { IsArray, IsNotEmpty, IsOptional, IsString } from "class-validator";
 import { Muscle } from "src/muscles/entities/muscle.entity";
 
 export class CreateExerciseDto {
@@ -8,5 +8,10 @@ export class CreateExerciseDto {
 
     @IsNotEmpty()
     @IsArray()
-    readonly muscles: Muscle[];
+    readonly primaryMuscles: Muscle[];
+
+    @IsOptional()
+    @IsNotEmpty()
+    @IsArray()
+    readonly secondaryMuscles?: Muscle[];
 }

@@ -23,7 +23,7 @@ export class MusclesService {
   async findOne(id: string): Promise<Muscle> {
     const muscle: Muscle | null = await this.musclesRepository.findOne({
       where: { id: id },
-      relations: { exercises: true }
+      relations: { primaryExercises: true, secondaryExercises: true }
     });
 
     if (!muscle) throw new NotFoundException();
@@ -32,10 +32,7 @@ export class MusclesService {
   }
 
   async update(id: string, updateMuscleDto: UpdateMuscleDto): Promise<Muscle> {
-    const muscle: Muscle | null = await this.musclesRepository.findOne({
-      where: { id: id },
-      relations: { exercises: true }
-    });
+    const muscle: Muscle | null = await this.musclesRepository.findOne({ where: { id: id } });
 
     if (!muscle) throw new NotFoundException();
 
@@ -43,10 +40,7 @@ export class MusclesService {
   }
 
   async remove(id: string): Promise<Muscle> {
-    const muscle: Muscle | null = await this.musclesRepository.findOne({
-      where: { id: id },
-      relations: { exercises: true }
-    });
+    const muscle: Muscle | null = await this.musclesRepository.findOne({ where: { id: id } });
 
     if (!muscle) throw new NotFoundException();
 

@@ -9,11 +9,19 @@ export class Exercise {
     @Column({ unique: true })
     name: string;
 
-    @ManyToMany(() => Muscle, (muscle: Muscle) => muscle.exercises)
+    @ManyToMany(() => Muscle, (muscle: Muscle) => muscle.primaryExercises)
     @JoinTable({
-        name: 'exercise_muscle',
+        name: 'exercise_muscle_primary',
         joinColumn: { name: 'exercise_id' },
         inverseJoinColumn: { name: 'muscle_id' }
     })
-    muscles: Muscle[];
+    primaryMuscles: Muscle[];
+
+    @ManyToMany(() => Muscle, (muscle: Muscle) => muscle.secondaryExercises)
+    @JoinTable({
+        name: 'exercise_muscle_secondary',
+        joinColumn: { name: 'exercise_id' },
+        inverseJoinColumn: { name: 'muscle_id' }
+    })
+    secondaryMuscles: Muscle[];
 }

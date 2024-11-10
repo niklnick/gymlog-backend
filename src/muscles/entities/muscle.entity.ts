@@ -9,6 +9,9 @@ export class Muscle {
     @Column({ unique: true })
     name: string;
 
-    @ManyToMany(() => Exercise, (exercise: Exercise) => exercise.muscles)
-    exercises: Exercise[];
+    @ManyToMany(() => Exercise, (exercise: Exercise) => exercise.primaryMuscles)
+    primaryExercises: Exercise[];
+
+    @ManyToMany(() => Exercise, (exercise: Exercise) => exercise.secondaryMuscles)
+    secondaryExercises: Exercise[];
 }
