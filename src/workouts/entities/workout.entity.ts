@@ -9,6 +9,10 @@ export class Workout {
     @Column({ unique: true })
     name: string;
 
-    @OneToMany(() => WorkoutExercise, (workoutExercise: WorkoutExercise) => workoutExercise.workout)
+    @OneToMany(
+        () => WorkoutExercise,
+        (workoutExercise: WorkoutExercise) => workoutExercise.workout,
+        { cascade: true }
+    )
     workoutExercises: WorkoutExercise[];
 }

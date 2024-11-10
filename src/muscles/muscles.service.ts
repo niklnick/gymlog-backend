@@ -17,7 +17,7 @@ export class MusclesService {
   }
 
   async findAll(): Promise<Muscle[]> {
-    return await this.musclesRepository.find({ relations: { exercises: true } });
+    return await this.musclesRepository.find();
   }
 
   async findOne(id: string): Promise<Muscle> {

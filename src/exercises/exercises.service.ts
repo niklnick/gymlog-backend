@@ -23,7 +23,7 @@ export class ExercisesService {
 
     if (exerciseQuery.name)
       query.andWhere('exercise.name ILIKE :name', { name: `%${exerciseQuery.name}%` });
-    if (exerciseQuery.muscleNames)
+    if (exerciseQuery.muscleNames && exerciseQuery.muscleNames.length > 0)
       query.andWhere('muscle.name IN (:...muscleNames)', {
         muscleNames: Array.isArray(exerciseQuery.muscleNames)
           ? exerciseQuery.muscleNames : [exerciseQuery.muscleNames]

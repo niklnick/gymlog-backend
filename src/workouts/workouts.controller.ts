@@ -1,6 +1,7 @@
-import { Body, Controller, Delete, Get, Param, Patch, Post } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Patch, Post, Query } from '@nestjs/common';
 import { CreateWorkoutDto } from './dto/create-workout.dto';
 import { UpdateWorkoutDto } from './dto/update-workout.dto';
+import { WorkoutQuery } from './dto/workout-query.interface';
 import { Workout } from './entities/workout.entity';
 import { WorkoutsService } from './workouts.service';
 
@@ -14,8 +15,8 @@ export class WorkoutsController {
   }
 
   @Get()
-  async findAll(): Promise<Workout[]> {
-    return await this.workoutsService.findAll();
+  async findAll(@Query() workoutQuery: WorkoutQuery): Promise<Workout[]> {
+    return await this.workoutsService.findAll(workoutQuery);
   }
 
   @Get(':id')
