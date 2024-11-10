@@ -1,5 +1,6 @@
+import { Equipment } from "src/equipments/entities/equipment.entity";
 import { Muscle } from "src/muscles/entities/muscle.entity";
-import { Column, Entity, JoinTable, ManyToMany, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, JoinColumn, JoinTable, ManyToMany, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity({ orderBy: { name: 'ASC' } })
 export class Exercise {
@@ -24,4 +25,8 @@ export class Exercise {
         inverseJoinColumn: { name: 'muscle_id' }
     })
     secondaryMuscles: Muscle[];
+
+    @ManyToOne(() => Equipment, (equipment: Equipment) => equipment.exercises)
+    @JoinColumn({ name: 'equipment_id' })
+    equipment?: Equipment | null;
 }

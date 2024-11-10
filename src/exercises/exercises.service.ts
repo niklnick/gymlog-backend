@@ -20,7 +20,8 @@ export class ExercisesService {
   async findAll(exerciseQuery: ExerciseQuery): Promise<Exercise[]> {
     const query: SelectQueryBuilder<Exercise> = this.exerciseRepository.createQueryBuilder('exercise')
       .leftJoinAndSelect('exercise.primaryMuscles', 'primaryMuscle')
-      .leftJoinAndSelect('exercise.secondaryMuscles', 'secondaryMuscle');
+      .leftJoinAndSelect('exercise.secondaryMuscles', 'secondaryMuscle')
+      .leftJoinAndSelect('exercise.equipment', 'equipment');
 
     if (exerciseQuery.name) query.andWhere('exercise.name = :name', { name: exerciseQuery.name });
     if (exerciseQuery.muscleNames && exerciseQuery.muscleNames.length > 0) {
@@ -35,14 +36,14 @@ export class ExercisesService {
       where: {
         id: In((await query.select('exercise.id').getMany()).map((exercise: Exercise) => exercise.id))
       },
-      relations: { primaryMuscles: true, secondaryMuscles: true }
+      relations: { primaryMuscles: true, secondaryMuscles: true, equipment: true }
     });
   }
 
   async findOne(id: string): Promise<Exercise> {
     const exercise: Exercise | null = await this.exerciseRepository.findOne({
       where: { id: id },
-      relations: { primaryMuscles: true, secondaryMuscles: true }
+      relations: { primaryMuscles: true, secondaryMuscles: true, equipment: true }
     });
 
     if (!exercise) throw new NotFoundException();
@@ -53,7 +54,7 @@ export class ExercisesService {
   async update(id: string, updateExerciseDto: UpdateExerciseDto): Promise<Exercise> {
     const exercise: Exercise | null = await this.exerciseRepository.findOne({
       where: { id: id },
-      relations: { primaryMuscles: true, secondaryMuscles: true }
+      relations: { primaryMuscles: true, secondaryMuscles: true, equipment: true }
     });
 
     if (!exercise) throw new NotFoundException();
@@ -62,10 +63,7 @@ export class ExercisesService {
   }
 
   async remove(id: string): Promise<Exercise> {
-    const exercise: Exercise | null = await this.exerciseRepository.findOne({
-      where: { id: id },
-      relations: { primaryMuscles: true, secondaryMuscles: true }
-    });
+    const exercise: Exercise | null = await this.exerciseRepository.findOne({ where: { id: id } });
 
     if (!exercise) throw new NotFoundException();
 
