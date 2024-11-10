@@ -22,14 +22,13 @@ export class ExercisesService {
       .leftJoinAndSelect('exercise.primaryMuscles', 'primaryMuscle')
       .leftJoinAndSelect('exercise.secondaryMuscles', 'secondaryMuscle');
 
-    if (exerciseQuery.name)
-      query.andWhere('exercise.name ILIKE :name', { name: `%${exerciseQuery.name}%` });
+    if (exerciseQuery.name) query.andWhere('exercise.name = :name', { name: exerciseQuery.name });
     if (exerciseQuery.muscleNames && exerciseQuery.muscleNames.length > 0) {
       const muscleNames: string[] = Array.isArray(exerciseQuery.muscleNames)
         ? exerciseQuery.muscleNames : [exerciseQuery.muscleNames];
 
       query.andWhere('primaryMuscle.name IN (:...muscleNames)', { muscleNames: muscleNames })
-        .andWhere('secondaryMuscle.name IN (:...muscleNames)', { muscleNames: muscleNames });
+        .orWhere('secondaryMuscle.name IN (:...muscleNames)', { muscleNames: muscleNames });
     }
 
     return await this.exerciseRepository.find({

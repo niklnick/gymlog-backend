@@ -22,8 +22,7 @@ export class WorkoutsService {
       .leftJoinAndSelect('workout.workoutExercises', 'workoutExercise')
       .leftJoinAndSelect('workoutExercise.exercise', 'exercise');
 
-    if (workoutQuery.name)
-      query.andWhere('workout.name ILIKE :name', { name: `%${workoutQuery.name}%` });
+    if (workoutQuery.name) query.andWhere('workout.name = :name', { name: workoutQuery.name });
     if (workoutQuery.exerciseNames && workoutQuery.exerciseNames.length > 0)
       query.andWhere('exercise.name IN (:...exerciseName)', {
         exerciseName: Array.isArray(workoutQuery.exerciseNames)
